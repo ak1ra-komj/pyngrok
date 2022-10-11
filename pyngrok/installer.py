@@ -6,6 +6,7 @@ import logging
 import os
 import platform
 import socket
+import ssl
 import sys
 import tempfile
 import time
@@ -248,6 +249,7 @@ def _download_file(url: str,
     :raises: :class:`~pyngrok.exception.PyngrokNgrokInstallError`: When an error occurs downloading ``ngrok``.
     """
     kwargs["timeout"] = kwargs.get("timeout", DEFAULT_DOWNLOAD_TIMEOUT)
+    kwargs["context"] = kwargs.get("context", ssl.create_default_context())
 
     if not url.lower().startswith("http"):
         raise PyngrokSecurityError(f"URL must start with \"http\": {url}")
